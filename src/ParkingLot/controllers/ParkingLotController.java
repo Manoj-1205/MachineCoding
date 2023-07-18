@@ -6,12 +6,16 @@ package ParkingLot.controllers;
 
 import ParkingLot.Exceptions.ParkingLotNullException;
 import ParkingLot.models.ParkingLot;
+import ParkingLot.services.ParkingLotService;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class ParkingLotController {
 
+    private ParkingLotService parkingLotService;
     public ParkingLot getParkingLot(Long id){
         validateId(id);
-        return null;
+        return parkingLotService.getParkingLot(id);
     }
 
     private static void validateId(Long id) {
