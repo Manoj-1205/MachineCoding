@@ -3,8 +3,11 @@ package ParkingLot.controllers;
 //Request Layer - Accepts the request from client and pass it to service layer
 //Controllers have two small responsibilities
 // 1. Request Level Validation -> Only for the request
+// 2. Date transformation -> Map request or response data
 
+import ParkingLot.Exceptions.InvalidRequest;
 import ParkingLot.Exceptions.ParkingLotNullException;
+import ParkingLot.dtos.CreateParkingLotRequest;
 import ParkingLot.models.ParkingLot;
 import ParkingLot.services.ParkingLotService;
 import lombok.AllArgsConstructor;
@@ -22,6 +25,19 @@ public class ParkingLotController {
         if(id == null){
             throw new ParkingLotNullException();
         }
+    }
+
+    public ParkingLot createParkingLot(CreateParkingLotRequest request){
+        validateRequest(request);
+        return parkingLotService.createParkingLot(request.toParkingLot());
+    }
+
+    private static void validateRequest(CreateParkingLotRequest request) {
+        if(request.getNumberOfFloors() == null && request.getNumberOfSlotsPerFloor()==null){
+            throw new InvalidRequest();
+        }
+
+
     }
 
 }
